@@ -87,7 +87,7 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
           <div className="flex min-h-full w-full" style={{ backgroundColor: design.bgColor, color: design.textColor, fontFamily: design.fontText }}>
              <div className="w-1/3 p-8 flex flex-col justify-between" style={{ backgroundColor: design.primaryColor, color: design.bgColor }}>
                 <div>
-                   {logoUrl && <img src={logoUrl} alt="Logo" className="max-w-[140px] max-h-[80px] object-contain mb-8 p-3 bg-white/10 rounded-xl mix-blend-luminosity" referrerPolicy="no-referrer" />}
+                   {logoUrl && <img src={logoUrl} alt="Logo" className="max-w-[140px] max-h-[80px] object-contain mb-8 p-3 bg-[#ffffff1a] rounded-xl mix-blend-luminosity" referrerPolicy="no-referrer" />}
                    {!logoUrl && <h2 className="text-2xl font-bold mb-8">{data.businessInfo.name}</h2>}
                    <div className="space-y-1 mb-8 opacity-90 text-sm">
                       <p className="whitespace-pre-line">{data.businessInfo.address}</p>
@@ -95,7 +95,7 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
                       <p><Num>{data.businessInfo.phone}</Num></p>
                    </div>
                    
-                   <div className="mt-12 pt-8 border-t border-white/20">
+                   <div className="mt-12 pt-8 border-t border-[#ffffff33]">
                       <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-2">Billed To</p>
                       <p className="font-bold text-lg">{data.clientInfo.name}</p>
                       <p className="opacity-90 text-sm whitespace-pre-line mt-1">{data.clientInfo.address}</p>
@@ -134,21 +134,21 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
                    <h1 className="text-5xl font-black mt-8 z-10 relative tracking-tight">INVOICE</h1>
                    <p className="opacity-80 mt-2 font-bold text-lg"><Num>#{data.referenceNumber}</Num></p>
                 </div>
-                {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-[180px] max-h-[90px] object-contain rounded bg-white/10 p-4 z-10 relative backdrop-blur-sm" referrerPolicy="no-referrer" /> : <h2 className="text-3xl font-black z-10 relative tracking-tight">{data.businessInfo.name}</h2>}
+                {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-[180px] max-h-[90px] object-contain rounded bg-[#ffffff1a] p-4 z-10 relative backdrop-blur-sm" referrerPolicy="no-referrer" /> : <h2 className="text-3xl font-black z-10 relative tracking-tight">{data.businessInfo.name}</h2>}
              </div>
              
-             <div className="mx-8 -mt-16 bg-white p-10 shadow-2xl z-20 border-t-8 flex flex-col flex-1 mb-8" style={{ borderColor: design.secondaryColor, color: '#09090b', backgroundColor: '#ffffff' }}>
-                <div className="flex justify-between mb-8 pb-8 border-b border-gray-100">
+             <div className="mx-8 -mt-16 bg-white p-10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] z-20 border-t-8 flex flex-col flex-1 mb-8" style={{ borderColor: design.secondaryColor, color: '#09090b', backgroundColor: '#ffffff' }}>
+                <div className="flex justify-between mb-8 pb-8 border-b border-[#f3f4f6]">
                    <div className="w-1/2">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Invoice To</p>
+                      <p className="text-[10px] font-bold text-[#9ca3af] uppercase tracking-widest mb-2">Invoice To</p>
                       <p className="font-black text-2xl mb-1">{data.clientInfo.name}</p>
-                      <p className="text-sm text-gray-600 whitespace-pre-wrap">{data.clientInfo.address}</p>
+                      <p className="text-sm text-[#4b5563] whitespace-pre-wrap">{data.clientInfo.address}</p>
                    </div>
                    <div className="w-1/2 text-right">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Invoice Details</p>
+                      <p className="text-[10px] font-bold text-[#9ca3af] uppercase tracking-widest mb-2">Invoice Details</p>
                       <div className="inline-block text-left">
-                         <p className="text-sm text-gray-600"><span className="inline-block w-20 font-bold">Date:</span> <Num>{data.date}</Num></p>
-                         <p className="text-sm text-gray-600"><span className="inline-block w-20 font-bold">Due:</span> <Num>{data.dueDate}</Num></p>
+                         <p className="text-sm text-[#4b5563]"><span className="inline-block w-20 font-bold">Date:</span> <Num>{data.date}</Num></p>
+                         <p className="text-sm text-[#4b5563]"><span className="inline-block w-20 font-bold">Due:</span> <Num>{data.dueDate}</Num></p>
                       </div>
                    </div>
                 </div>
@@ -308,7 +308,7 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
                  </div>
                  <div className="text-right font-mono">
                     <h1 className="text-3xl font-bold tracking-widest mb-4 uppercase" style={{ color: design.primaryColor, textShadow: `0 0 10px ${design.primaryColor}60` }}>INVOICE_</h1>
-                    <div className="text-xs space-y-1 opacity-80 bg-black/20 p-3 rounded border border-white/10 text-left inline-block">
+                    <div className="text-xs space-y-1 opacity-80 bg-[#00000033] p-3 rounded border border-[#ffffff1a] text-left inline-block">
                         <p><span className="text-[#888] inline-block w-12">ID:</span> <Num>{data.referenceNumber}</Num></p>
                         <p><span className="text-[#888] inline-block w-12">DT:</span> <Num>{data.date}</Num></p>
                         <p><span className="text-[#888] inline-block w-12">DUE:</span> <Num>{data.dueDate}</Num></p>
@@ -320,7 +320,7 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
                 <p className="text-[#888] mb-2 uppercase tracking-widest">{`> `}Target_Client</p>
                 <div className="pl-4 border-l-2" style={{ borderColor: design.primaryColor }}>
                    <p className="font-bold text-sm text-white mb-1" style={{ color: design.textColor }}>{data.clientInfo.name}</p>
-                   <p className="opacity-70 whitespace-pre-line p-2 bg-black/10 inline-block rounded">{data.clientInfo.address}</p>
+                   <p className="opacity-70 whitespace-pre-line p-2 bg-[#0000001a] inline-block rounded">{data.clientInfo.address}</p>
                 </div>
              </div>
 
@@ -338,11 +338,11 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
         return (
           <div className="min-h-full w-full p-12 bg-opacity-30 relative" style={{ backgroundColor: design.bgColor, color: design.textColor, fontFamily: design.fontText, backgroundImage: `repeating-linear-gradient(45deg, ${design.secondaryColor}10 25%, transparent 25%, transparent 75%, ${design.secondaryColor}10 75%, ${design.secondaryColor}10), repeating-linear-gradient(45deg, ${design.secondaryColor}10 25%, ${design.bgColor} 25%, ${design.bgColor} 75%, ${design.secondaryColor}10 75%, ${design.secondaryColor}10)`, backgroundPosition: '0 0, 10px 10px', backgroundSize: '20px 20px' }}>
               <div className="bg-white p-12 shadow-[8px_8px_0_0_rgba(0,0,0,0.2)] border-2 border-black flex flex-col h-full relative" style={{ boxShadow: `12px 12px 0 0 ${design.primaryColor}`, borderColor: design.primaryColor }}>
-                 <div className="absolute top-0 right-12 w-16 h-24 bg-red-500 opacity-20 -translate-y-4 shadow-sm z-0" style={{ backgroundColor: design.secondaryColor }}></div>
+                 <div className="absolute top-0 right-12 w-16 h-24 bg-[#ef4444] opacity-20 -translate-y-4 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] z-0" style={{ backgroundColor: design.secondaryColor }}></div>
                  
                  <div className="flex justify-between items-end border-b-4 border-dashed pb-8 mb-10 z-10 relative" style={{ borderColor: design.primaryColor }}>
-                     {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-[160px] max-h-[80px] object-contain filter drop-shadow-md" referrerPolicy="no-referrer" /> : <h1 className="text-4xl font-extrabold uppercase tracking-tighter" style={{ color: design.primaryColor }}>{data.businessInfo.name}</h1>}
-                     <div className="text-right p-4 border-2 -mr-4 bg-[#fff8e7] rotate-2 shadow-sm" style={{ borderColor: design.primaryColor, backgroundColor: design.bgColor }}>
+                     {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-[160px] max-h-[80px] object-contain filter" style={{ filter: 'drop-shadow(0 4px 3px rgba(0,0,0,0.07))' }} referrerPolicy="no-referrer" /> : <h1 className="text-4xl font-extrabold uppercase tracking-tighter" style={{ color: design.primaryColor }}>{data.businessInfo.name}</h1>}
+                     <div className="text-right p-4 border-2 -mr-4 bg-[#fff8e7] rotate-2 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]" style={{ borderColor: design.primaryColor, backgroundColor: design.bgColor }}>
                          <h2 className="text-2xl font-black uppercase tracking-widest mb-1" style={{ color: design.primaryColor }}>Invoice</h2>
                          <p className="font-bold font-mono text-sm">No. <Num>{data.referenceNumber}</Num></p>
                      </div>
@@ -374,7 +374,7 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
       case 'receipt':
         return (
           <div className="min-h-full w-full p-8 flex justify-center items-start overflow-auto" style={{ backgroundColor: design.bgColor, color: design.textColor, fontFamily: design.fontNum }}>
-             <div className="w-[380px] bg-white text-black p-8 shadow-2xl relative border border-gray-200" style={{ color: design.textColor, fontFamily: design.fontNum, borderTop: `8px solid ${design.primaryColor}` }}>
+             <div className="w-[380px] bg-white text-black p-8 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] relative border border-[#e5e7eb]" style={{ color: design.textColor, fontFamily: design.fontNum, borderTop: `8px solid ${design.primaryColor}` }}>
                 {/* Thermal receipt zig-zag bottom */}
                 <div className="absolute -bottom-2 -left-2 -right-2 h-4 bg-white" style={{ clipPath: 'polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%)' }}></div>
                 
@@ -456,7 +456,7 @@ export function InvoicePreview({ data, design, layout, logoUrl, previewRef }: In
   };
 
   return (
-    <div ref={previewRef} className="shadow-lg relative overflow-hidden transition-all bg-white" style={{ minHeight: '100%', display: 'flex' }}>
+    <div ref={previewRef} className="shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all bg-white" style={{ minHeight: '100%', display: 'flex' }}>
       {renderLayout()}
     </div>
   );
