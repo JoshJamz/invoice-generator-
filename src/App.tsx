@@ -11,24 +11,125 @@ import { format } from 'date-fns';
 import { toWords } from 'number-to-words';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { FONTS, GOOGLE_FONTS_URL } from './fonts';
 import { Settings, Download, Loader2, Plus, Trash2, Wand2 } from 'lucide-react';
 
 const CURRENCIES = [
-  { code: 'USD', symbol: '$', name: 'US Dollar', word: 'dollars' },
+  { code: 'AFN', symbol: '؋', name: 'Afghanistan Afghani', word: 'afghanis' },
+  { code: 'ALL', symbol: 'L', name: 'Albania Lek', word: 'lek' },
+  { code: 'DZD', symbol: 'د.ج', name: 'Algeria Dinar', word: 'dinars' },
+  { code: 'AOA', symbol: 'Kz', name: 'Angola Kwanza', word: 'kwanzas' },
+  { code: 'ARS', symbol: '$', name: 'Argentina Peso', word: 'pesos' },
+  { code: 'AMD', symbol: '֏', name: 'Armenia Dram', word: 'drams' },
+  { code: 'AWG', symbol: 'ƒ', name: 'Aruba Florin', word: 'florins' },
+  { code: 'AUD', symbol: '$', name: 'Australia Dollar', word: 'dollars' },
+  { code: 'AZN', symbol: '₼', name: 'Azerbaijan Manat', word: 'manats' },
+  { code: 'BSD', symbol: '$', name: 'Bahamas Dollar', word: 'dollars' },
+  { code: 'BHD', symbol: '.د.ب', name: 'Bahrain Dinar', word: 'dinars' },
+  { code: 'BDT', symbol: '৳', name: 'Bangladesh Taka', word: 'taka' },
+  { code: 'BBD', symbol: '$', name: 'Barbados Dollar', word: 'dollars' },
+  { code: 'BYN', symbol: 'Br', name: 'Belarus Ruble', word: 'rubles' },
+  { code: 'BZD', symbol: '$', name: 'Belize Dollar', word: 'dollars' },
+  { code: 'XOF', symbol: 'CFA', name: 'Benin CFA Franc', word: 'francs' },
+  { code: 'BTN', symbol: 'Nu.', name: 'Bhutan Ngultrum', word: 'ngultrums' },
+  { code: 'BOB', symbol: 'Bs.', name: 'Bolivia Boliviano', word: 'bolivianos' },
+  { code: 'BAM', symbol: 'KM', name: 'Bosnia & Herzegovina Convertible Mark', word: 'marks' },
+  { code: 'BWP', symbol: 'P', name: 'Botswana Pula', word: 'pula' },
+  { code: 'BRL', symbol: 'R$', name: 'Brazil Real', word: 'reais' },
+  { code: 'BND', symbol: '$', name: 'Brunei Dollar', word: 'dollars' },
+  { code: 'BGN', symbol: 'лв', name: 'Bulgaria Lev', word: 'leva' },
+  { code: 'BIF', symbol: 'Fr', name: 'Burundi Franc', word: 'francs' },
+  { code: 'KHR', symbol: '៛', name: 'Cambodia Riel', word: 'riels' },
+  { code: 'XAF', symbol: 'CFA', name: 'Cameroon CFA Franc', word: 'francs' },
+  { code: 'CAD', symbol: '$', name: 'Canada Dollar', word: 'dollars' },
+  { code: 'CLP', symbol: '$', name: 'Chile Peso', word: 'pesos' },
+  { code: 'CNY', symbol: '¥', name: 'China Yuan', word: 'yuan' },
+  { code: 'COP', symbol: '$', name: 'Colombia Peso', word: 'pesos' },
+  { code: 'CDF', symbol: 'FC', name: 'Congo (DRC) Franc', word: 'francs' },
+  { code: 'CRC', symbol: '₡', name: 'Costa Rica Colón', word: 'colones' },
+  { code: 'HRK', symbol: 'kn', name: 'Croatia Kuna', word: 'kunas' },
+  { code: 'CUP', symbol: '₱', name: 'Cuba Peso', word: 'pesos' },
+  { code: 'CZK', symbol: 'Kč', name: 'Czech Republic Koruna', word: 'koruny' },
+  { code: 'DKK', symbol: 'kr', name: 'Denmark Krone', word: 'kroner' },
+  { code: 'DJF', symbol: 'Fr', name: 'Djibouti Franc', word: 'francs' },
+  { code: 'DOP', symbol: '$', name: 'Dominican Republic Peso', word: 'pesos' },
+  { code: 'EGP', symbol: '£', name: 'Egypt Pound', word: 'pounds' },
+  { code: 'ETB', symbol: 'Br', name: 'Ethiopia Birr', word: 'birr' },
   { code: 'EUR', symbol: '€', name: 'Euro', word: 'euros' },
-  { code: 'GBP', symbol: '£', name: 'Pound Sterling', word: 'pounds' },
-  { code: 'JPY', symbol: '¥', name: 'Yen', word: 'yen' },
-  { code: 'NGN', symbol: '₦', name: 'Naira', word: 'naira' },
-  { code: 'CNY', symbol: '¥', name: 'Yuan Renminbi', word: 'yuan' },
-  { code: 'INR', symbol: '₹', name: 'Rupee', word: 'rupees' },
-  { code: 'CAD', symbol: '$', name: 'Canadian Dollar', word: 'Canadian dollars' },
-  { code: 'AUD', symbol: '$', name: 'Australian Dollar', word: 'Australian dollars' },
-  { code: 'CHF', symbol: 'CHF ', name: 'Swiss Franc', word: 'francs' },
-  { code: 'ZAR', symbol: 'R ', name: 'Rand', word: 'rand' },
-  { code: 'GHS', symbol: '₵', name: 'Cedi', word: 'cedis' },
-  { code: 'KES', symbol: 'KSh ', name: 'Kenyan Shilling', word: 'shillings' },
-  { code: 'AED', symbol: 'د.إ ', name: 'Dirham', word: 'dirhams' },
-  { code: 'SAR', symbol: '﷼ ', name: 'Riyal', word: 'riyals' }
+  { code: 'FJD', symbol: '$', name: 'Fiji Dollar', word: 'dollars' },
+  { code: 'GMD', symbol: 'D', name: 'Gambia Dalasi', word: 'dalasis' },
+  { code: 'GEL', symbol: '₾', name: 'Georgia Lari', word: 'lari' },
+  { code: 'GHS', symbol: '₵', name: 'Ghana Cedi', word: 'cedis' },
+  { code: 'GTQ', symbol: 'Q', name: 'Guatemala Quetzal', word: 'quetzales' },
+  { code: 'GNF', symbol: 'Fr', name: 'Guinea Franc', word: 'francs' },
+  { code: 'HTG', symbol: 'G', name: 'Haiti Gourde', word: 'gourdes' },
+  { code: 'HNL', symbol: 'L', name: 'Honduras Lempira', word: 'lempiras' },
+  { code: 'HKD', symbol: '$', name: 'Hong Kong Dollar', word: 'dollars' },
+  { code: 'HUF', symbol: 'Ft', name: 'Hungary Forint', word: 'forints' },
+  { code: 'ISK', symbol: 'kr', name: 'Iceland Krona', word: 'kronor' },
+  { code: 'INR', symbol: '₹', name: 'India Rupee', word: 'rupees' },
+  { code: 'IDR', symbol: 'Rp', name: 'Indonesia Rupiah', word: 'rupiahs' },
+  { code: 'IRR', symbol: '﷼', name: 'Iran Rial', word: 'rials' },
+  { code: 'IQD', symbol: 'ع.د', name: 'Iraq Dinar', word: 'dinars' },
+  { code: 'JMD', symbol: '$', name: 'Jamaica Dollar', word: 'dollars' },
+  { code: 'JPY', symbol: '¥', name: 'Japan Yen', word: 'yen' },
+  { code: 'KZT', symbol: '₸', name: 'Kazakhstan Tenge', word: 'tenge' },
+  { code: 'KES', symbol: 'KSh', name: 'Kenya Shilling', word: 'shillings' },
+  { code: 'KWD', symbol: 'د.ك', name: 'Kuwait Dinar', word: 'dinars' },
+  { code: 'LAK', symbol: '₭', name: 'Laos Kip', word: 'kip' },
+  { code: 'LBP', symbol: 'ل.ل', name: 'Lebanon Pound', word: 'pounds' },
+  { code: 'LSL', symbol: 'L', name: 'Lesotho Loti', word: 'maloti' },
+  { code: 'LRD', symbol: '$', name: 'Liberia Dollar', word: 'dollars' },
+  { code: 'LYD', symbol: 'ل.د', name: 'Libya Dinar', word: 'dinars' },
+  { code: 'MGA', symbol: 'Ar', name: 'Madagascar Ariary', word: 'ariary' },
+  { code: 'MWK', symbol: 'MK', name: 'Malawi Kwacha', word: 'kwacha' },
+  { code: 'MYR', symbol: 'RM', name: 'Malaysia Ringgit', word: 'ringgit' },
+  { code: 'MVR', symbol: 'ރ', name: 'Maldives Rufiyaa', word: 'rufiyaa' },
+  { code: 'MRU', symbol: 'UM', name: 'Mauritania Ouguiya', word: 'ouguiya' },
+  { code: 'MUR', symbol: '₨', name: 'Mauritius Rupee', word: 'rupees' },
+  { code: 'MXN', symbol: '$', name: 'Mexico Peso', word: 'pesos' },
+  { code: 'MNT', symbol: '₮', name: 'Mongolia Tugrik', word: 'tugriks' },
+  { code: 'MAD', symbol: 'د.م.', name: 'Morocco Dirham', word: 'dirhams' },
+  { code: 'NAD', symbol: '$', name: 'Namibia Dollar', word: 'dollars' },
+  { code: 'NPR', symbol: '₨', name: 'Nepal Rupee', word: 'rupees' },
+  { code: 'NZD', symbol: '$', name: 'New Zealand Dollar', word: 'dollars' },
+  { code: 'NIO', symbol: 'C$', name: 'Nicaragua Córdoba', word: 'córdobas' },
+  { code: 'NGN', symbol: '₦', name: 'Nigeria Naira', word: 'naira' },
+  { code: 'NOK', symbol: 'kr', name: 'Norway Krone', word: 'kroner' },
+  { code: 'OMR', symbol: '﷼', name: 'Oman Rial', word: 'rials' },
+  { code: 'PKR', symbol: '₨', name: 'Pakistan Rupee', word: 'rupees' },
+  { code: 'PAB', symbol: 'B/.', name: 'Panama Balboa', word: 'balboas' },
+  { code: 'PGK', symbol: 'K', name: 'Papua New Guinea Kina', word: 'kina' },
+  { code: 'PYG', symbol: '₲', name: 'Paraguay Guarani', word: 'guaraníes' },
+  { code: 'PEN', symbol: 'S/', name: 'Peru Sol', word: 'soles' },
+  { code: 'PHP', symbol: '₱', name: 'Philippines Peso', word: 'pesos' },
+  { code: 'PLN', symbol: 'zł', name: 'Poland Zloty', word: 'zloty' },
+  { code: 'QAR', symbol: '﷼', name: 'Qatar Riyal', word: 'riyals' },
+  { code: 'RON', symbol: 'lei', name: 'Romania Leu', word: 'lei' },
+  { code: 'RUB', symbol: '₽', name: 'Russia Ruble', word: 'rubles' },
+  { code: 'SAR', symbol: '﷼', name: 'Saudi Arabia Riyal', word: 'riyals' },
+  { code: 'RSD', symbol: 'дин', name: 'Serbia Dinar', word: 'dinars' },
+  { code: 'SGD', symbol: '$', name: 'Singapore Dollar', word: 'dollars' },
+  { code: 'ZAR', symbol: 'R', name: 'South Africa Rand', word: 'rand' },
+  { code: 'KRW', symbol: '₩', name: 'South Korea Won', word: 'won' },
+  { code: 'LKR', symbol: '₨', name: 'Sri Lanka Rupee', word: 'rupees' },
+  { code: 'SEK', symbol: 'kr', name: 'Sweden Krona', word: 'kronor' },
+  { code: 'CHF', symbol: 'CHF', name: 'Switzerland Franc', word: 'francs' },
+  { code: 'TWD', symbol: 'NT$', name: 'Taiwan Dollar', word: 'dollars' },
+  { code: 'TZS', symbol: 'TSh', name: 'Tanzania Shilling', word: 'shillings' },
+  { code: 'THB', symbol: '฿', name: 'Thailand Baht', word: 'baht' },
+  { code: 'TND', symbol: 'د.ت', name: 'Tunisia Dinar', word: 'dinars' },
+  { code: 'TRY', symbol: '₺', name: 'Turkey Lira', word: 'lira' },
+  { code: 'UGX', symbol: 'USh', name: 'Uganda Shilling', word: 'shillings' },
+  { code: 'UAH', symbol: '₴', name: 'Ukraine Hryvnia', word: 'hryvnias' },
+  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', word: 'dirhams' },
+  { code: 'GBP', symbol: '£', name: 'United Kingdom Pound', word: 'pounds' },
+  { code: 'USD', symbol: '$', name: 'US Dollar', word: 'dollars' },
+  { code: 'VES', symbol: 'Bs.', name: 'Venezuela Bolívar', word: 'bolívares' },
+  { code: 'VND', symbol: '₫', name: 'Vietnam Dong', word: 'dong' },
+  { code: 'YER', symbol: '﷼', name: 'Yemen Rial', word: 'rials' },
+  { code: 'ZMW', symbol: 'ZK', name: 'Zambia Kwacha', word: 'kwacha' },
+  { code: 'ZWL', symbol: '$', name: 'Zimbabwe Dollar', word: 'dollars' }
 ];
 
 const ColorPicker = ({ label, value, onChange }: { label: string, value: string, onChange: (v: string) => void }) => (
@@ -191,6 +292,7 @@ export default function App() {
 
   return (
     <div className="h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col overflow-hidden font-sans">
+      <style dangerouslySetInnerHTML={{ __html: `@import url('${GOOGLE_FONTS_URL()}');` }} />
       <header className="h-[60px] bg-white border-b border-[var(--border)] flex items-center justify-between px-6 z-10 shrink-0">
         <div className="flex items-center gap-3 font-bold text-xl text-[var(--primary)]">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -245,21 +347,13 @@ export default function App() {
                    <div className="flex flex-col gap-1">
                       <Label className="text-[10px] uppercase font-bold text-gray-500">Text Font</Label>
                       <select className="h-8 text-xs border border-[var(--border)] bg-white rounded-[4px] px-2 focus-visible:outline-none text-ellipsis" value={design.fontText} onChange={e => setDesign({...design, fontText: e.target.value})}>
-                         <option value="Inter, sans-serif">Inter</option>
-                         <option value="Arial, sans-serif">Arial</option>
-                         <option value="'Helvetica Neue', Arial, sans-serif">Helvetica Neue</option>
-                         <option value="Georgia, serif">Georgia</option>
-                         <option value="'Courier New', Courier, monospace">Courier New</option>
+                         {FONTS.map(f => <option key={f.name} value={f.value}>{f.name}</option>)}
                       </select>
                    </div>
                    <div className="flex flex-col gap-1">
                       <Label className="text-[10px] uppercase font-bold text-gray-500">Numbers Font</Label>
                       <select className="h-8 text-xs border border-[var(--border)] bg-white rounded-[4px] px-2 focus-visible:outline-none text-ellipsis" value={design.fontNum} onChange={e => setDesign({...design, fontNum: e.target.value})}>
-                         <option value="Inter, sans-serif">Inter</option>
-                         <option value="'Helvetica Neue', Arial, sans-serif">Helvetica</option>
-                         <option value="Georgia, serif">Georgia</option>
-                         <option value="'Courier New', Courier, monospace">Courier New (Mono)</option>
-                         <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                         {FONTS.map(f => <option key={f.name} value={f.value}>{f.name}</option>)}
                       </select>
                    </div>
                 </div>

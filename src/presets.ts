@@ -19,7 +19,7 @@ export const PALETTES = [
   { name: 'Ocean', primaryColor: '#0369a1', secondaryColor: '#bae6fd', bgColor: '#f0f9ff', textColor: '#0c4a6e', fontText: 'Arial, sans-serif', fontNum: 'Inter, sans-serif' },
 ];
 
-export const LAYOUTS = ['modern', 'bold', 'minimal', 'executive', 'classic'] as const;
+export const LAYOUTS = ['modern', 'bold', 'minimal', 'executive', 'classic', 'contemporary', 'elegant', 'tech', 'retro', 'receipt'] as const;
 
 export const TEMPLATES: TemplateBlueprint[] = LAYOUTS.flatMap(layout => 
   PALETTES.map((pal, idx) => ({
