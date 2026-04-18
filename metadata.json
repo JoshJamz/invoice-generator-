@@ -1,0 +1,6 @@
+{
+  "name": "Invoice Generator",
+  "description": "Generate custom, editable invoices with branding auto-fetched via AI. Choose from 50 templates and export to PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
