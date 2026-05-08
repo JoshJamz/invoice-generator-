@@ -11,17 +11,29 @@ export interface BrandingInfo {
   accentStyle?: string;
 }
 
-const ai = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
-
 export function useBranding() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchBranding = async (websiteUrl: string): Promise<BrandingInfo | null> => {
-    if (!ai) {
-      setError('Gemini API key is not configured.');
-      return null;
+    // API KEY SELECTION LOGIC
+    if (!(window as any).aistudio?.hasSelectedApiKey?.()) {
+      try {
+        await (window as any).aistudio?.openSelectKey?.();
+      } catch (e) {
+        setError('Gemini API key is required to use this feature.');
+        return null;
+      }
     }
+
+    // Attempt to load the key
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) {
+       setError('Gemini API key is not configured.');
+       return null;
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
 
     setLoading(true);
     setError(null);

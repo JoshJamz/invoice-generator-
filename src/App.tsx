@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useBranding } from './hooks/useBranding';
 import { InvoicePreview } from './components/InvoicePreview';
 import { TEMPLATES } from './presets';
@@ -159,6 +159,27 @@ export default function App() {
   });
 
   const previewRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const [previewScale, setPreviewScale] = useState(1);
+
+  useLayoutEffect(() => {
+    if (!mainRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const { width } = entry.contentRect;
+        // The desktop layout gives main remaining width. Mobile is 100vw.
+        // We want 800px to fit inside width with a little padding (e.g. 16px each side = 32px)
+        const availableWidth = width - 32;
+        if (availableWidth < 800) {
+          setPreviewScale(availableWidth / 800);
+        } else {
+          setPreviewScale(1);
+        }
+      }
+    });
+    observer.observe(mainRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     referenceNumber: `INV-${Math.floor(Math.random() * 100000)}`,
@@ -489,9 +510,9 @@ export default function App() {
         </aside>
 
         {/* Preview Area */}
-        <main className="flex-1 md:overflow-auto w-full flex justify-center py-10 px-4 bg-[var(--preview-bg,var(--bg))] pb-24 md:pb-10 max-w-[100vw] overflow-x-auto">
+        <main ref={mainRef} className="flex-1 md:overflow-auto w-full flex justify-center py-10 bg-[var(--preview-bg,var(--bg))] pb-24 md:pb-10 max-w-[100vw] overflow-x-hidden">
           {/* Wrapper to allow smooth rendering for large A4 on mobile */}
-          <div className="w-[800px] min-w-min max-w-[800px] shrink-0" style={{ transformOrigin: 'top center' }}>
+          <div className="w-[800px] shrink-0" style={{ transformOrigin: 'top center', transform: `scale(${previewScale})`, marginBottom: previewScale < 1 ? `-${1131 * (1 - previewScale)}px` : '0px' }}>
             <div className="bg-white shadow-[0_15px_30px_rgba(0,0,0,0.15)] rounded-sm shrink-0 overflow-hidden w-full" style={{ minHeight: '1131px' }}>
               <InvoicePreview 
                 data={invoiceData}
