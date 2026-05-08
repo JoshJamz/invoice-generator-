@@ -291,9 +291,9 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col overflow-hidden font-sans">
+    <div className="min-h-screen md:h-screen bg-[var(--bg)] text-[var(--text)] flex flex-col font-sans overflow-x-hidden md:overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: `@import url('${GOOGLE_FONTS_URL()}');` }} />
-      <header className="h-[60px] bg-white border-b border-[var(--border)] flex items-center justify-between px-6 z-10 shrink-0">
+      <header className="h-[auto] py-3 md:h-[60px] bg-white border-b border-[var(--border)] flex flex-col md:flex-row items-center justify-between px-6 z-10 shrink-0 gap-3 md:gap-0 sticky top-0">
         <div className="flex items-center gap-3 font-bold text-xl text-[var(--primary)]">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -309,9 +309,9 @@ export default function App() {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden h-[calc(100vh-60px)]">
+      <div className="flex flex-col md:flex-row flex-1 md:overflow-hidden border-t border-transparent">
         {/* Sidebar / Editor */}
-        <aside className="w-[360px] bg-white border-r border-[var(--border)] p-5 overflow-y-auto shrink-0 flex flex-col gap-8 shadow-sm">
+        <aside className="w-full md:w-[360px] lg:w-[400px] bg-white border-b md:border-b-0 md:border-r border-[var(--border)] p-5 md:overflow-y-auto shrink-0 flex flex-col gap-8 shadow-sm z-10 relative">
           
           {/* Blueprint Chooser */}
           <section className="space-y-3">
@@ -489,16 +489,18 @@ export default function App() {
         </aside>
 
         {/* Preview Area */}
-        <main className="flex-1 overflow-y-auto w-full flex justify-center py-10 px-4 bg-[var(--preview-bg,var(--bg))]">
-          {/* A4 roughly 210x297mm => 1:1.414 aspect. 800px width */ }
-          <div className="w-full max-w-[800px] bg-white shadow-[0_15px_30px_rgba(0,0,0,0.15)] rounded-sm shrink-0" style={{ transformOrigin: 'top center', minHeight: '1131px' }}>
-            <InvoicePreview 
-              data={invoiceData}
-              design={design}
-              layout={templateLayout}
-              logoUrl={invoiceData.businessInfo.uploadedLogo}
-              previewRef={previewRef}
-            />
+        <main className="flex-1 md:overflow-auto w-full flex justify-center py-10 px-4 bg-[var(--preview-bg,var(--bg))] pb-24 md:pb-10 max-w-[100vw] overflow-x-auto">
+          {/* Wrapper to allow smooth rendering for large A4 on mobile */}
+          <div className="w-[800px] min-w-min max-w-[800px] shrink-0" style={{ transformOrigin: 'top center' }}>
+            <div className="bg-white shadow-[0_15px_30px_rgba(0,0,0,0.15)] rounded-sm shrink-0 overflow-hidden w-full" style={{ minHeight: '1131px' }}>
+              <InvoicePreview 
+                data={invoiceData}
+                design={design}
+                layout={templateLayout}
+                logoUrl={invoiceData.businessInfo.uploadedLogo}
+                previewRef={previewRef}
+              />
+            </div>
           </div>
         </main>
       </div>
